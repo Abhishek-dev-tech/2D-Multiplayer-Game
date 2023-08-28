@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [Space(10)]
     public Vector2 min, max;
 
+    private GameObject spawnedPlayer;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,15 +37,17 @@ public class GameManager : MonoBehaviour
     {
         Vector2 randomPos = new Vector2 (Random.Range(min.x, max.x), Random.Range(min.y, max.y));
 
-        PhotonNetwork.Instantiate(player.name, randomPos, Quaternion.identity);
+        spawnedPlayer = PhotonNetwork.Instantiate(player.name, randomPos, Quaternion.identity);
     }
 
     public void GameOver()
     {
         gameState = GameState.GameOver;
+        spawnedPlayer.SetActive(false);
     }
 
-    public GameState GameState { 
+    public GameState GameState 
+    { 
         
         get { return gameState; }
 

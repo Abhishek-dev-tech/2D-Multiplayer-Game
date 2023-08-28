@@ -55,6 +55,8 @@ MonoBehaviour:
   - Attack
   - TakeDamage
   - RPC_Attack
+  - RPC_UpdateKills
+  - RPC_Retry
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

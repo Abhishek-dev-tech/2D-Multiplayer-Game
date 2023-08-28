@@ -29,6 +29,9 @@ public class LaserEnemy : EnemyController
 
     private void Update()
     {
+        if (GameManager.instance.GameState == GameState.GameOver)
+            return;
+
         target = GetClosestTarget();
 
         if (GetDistance(target) > attackDistance)
@@ -82,19 +85,6 @@ public class LaserEnemy : EnemyController
 
         laserPoints[1] = laserPoint.GetPosition(1);
         laserCollider.SetPoints(laserPoints);
-    }
-
-    public override void TakeDamage(float value)
-    {
-        Health -= value;
-
-        spriteRenderer.color = Color.white;
-
-        popUp.Popup();
-
-        Invoke("ResetColor", 0.075f);
-
-        if (Health <= 0) Die();
     }
 
     private void ResetColor()

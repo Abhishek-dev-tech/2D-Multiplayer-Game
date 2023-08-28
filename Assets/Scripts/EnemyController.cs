@@ -67,8 +67,9 @@ public abstract class EnemyController : MonoBehaviour
 
         once++;
 
+        UIManager.instance.AddScore(50);
+
         gameObject.SetActive(false);
-        UIManager.instance.AddKill();
 
         GameObject deathParticle = ObjectPool.instance.GetDeathParticle();
 
@@ -83,7 +84,19 @@ public abstract class EnemyController : MonoBehaviour
 
     public abstract void Attack();
 
-    public abstract void TakeDamage(float value);
+    public  void TakeDamage(float value)
+    {
+        Health -= value;
+
+        spriteRenderer.color = Color.white;
+
+        popUp.Popup();
+
+        Invoke("ResetColor", 0.075f);
+
+        if (Health <= 0) Die();
+
+    }
 
     public Vector2 GetDirection(GameObject _target)
     {

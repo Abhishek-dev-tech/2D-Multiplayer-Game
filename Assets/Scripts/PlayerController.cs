@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        float desiredBulletSpread = Random.Range(-bulletSpread, bulletSpread);
+        float desiredBulletSpread = UnityEngine.Random.Range(-bulletSpread, bulletSpread);
 
         view.RPC("RPC_Shoot", RpcTarget.All, GetBulletAngle(), desiredBulletSpread);
     }
@@ -115,7 +116,14 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        //GameManager.instance.GameOver();
+        view.RPC("RPC_Die", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RPC_Die()
+    {
+        GameManager.instance.GameOver();
+        UIManager.instance.GameOver();
     }
 
     private float GetBulletAngle()

@@ -11,20 +11,29 @@ public class UIManager : MonoBehaviour
     private TMP_Text countText;
 
     [SerializeField]
-    private TMP_Text[] playersNameText, playersKillText;
+    private TMP_Text scoreText;
+
+    [SerializeField]
+    private TMP_Text gameOverScoreText;
 
     [SerializeField, Space(10)]
     private Image healthBar;
 
+    [SerializeField, Space(10)]
+    private GameObject gameOverPanel;
+
     [SerializeField]
-    private GameObject killPanel;
+    private GameObject warningGameObject;
+
+    [SerializeField, Space(10)]
+    private Button retryButton;
 
     [SerializeField, Space(10)]
     private float maxCountTime;
 
     private float countTimer;
 
-    private int kills;
+    private int score;
 
     private void Awake()
     {
@@ -36,7 +45,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        SetKillPanelName();
+        scoreText.gameObject.SetActive(false);
+        scoreText.text = score.ToString();
     }
 
     private void Update()
@@ -44,8 +54,8 @@ public class UIManager : MonoBehaviour
         if(GameManager.instance.GameState == GameState.Preparing)
             CountTime();
 
-        if((Input.GetKeyDown(KeyCode.E) || Input.GetKeyUp(KeyCode.E)) && GameManager.instance.GameState == GameState.Playing)
-            ToogleKillPanel();
+        if (GameManager.instance.GameState == GameState.GameOver)
+            UpdateRetryButton();
     }
 
     private void CountTime()
@@ -55,6 +65,7 @@ public class UIManager : MonoBehaviour
             GameManager.instance.GameState = GameState.Playing;
             countText.gameObject.SetActive(false);
             healthBar.transform.parent.gameObject.SetActive(true);
+            scoreText.gameObject.SetActive(true);
             countTimer = 0;
         }
 
@@ -68,27 +79,55 @@ public class UIManager : MonoBehaviour
         healthBar.fillAmount = value / 100;
     }
 
-    public void AddKill()
+    public void AddScore(int value)
     {
-        kills++;
+        score += value;
 
-        playersKillText[0].text = kills.ToString();
+        scoreText.text = score.ToString();
+
+        scoreText.GetComponent<PopUp>().Popup();
     }
 
-    private void ToogleKillPanel()
+    public void GameOver()
     {
-        killPanel.SetActive(!killPanel.activeInHierarchy);
+        healthBar.transform.parent.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        gameOverPanel.SetActive(true);
+
+        retryButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+        warningGameObject.SetActive(!PhotonNetwork.IsMasterClient);
+
+        gameOverScoreText.text = "Score: " + score.ToString();
     }
 
-    private void SetKillPanelName()
+    public void Retry()
     {
-        playersNameText[0].text = PhotonNetwork.PlayerList[0].NickName;
-        playersNameText[1].text = PhotonNetwork.PlayerList[1].NickName;
+        
     }
 
-    public void UpdateKills(int value)
+    [PunRPC]
+    public void RPC_Retry()
     {
-        playersKillText[0].text = kills.ToString();
-        playersKillText[1].text = value.ToString();
+        PhotonNetwork.LoadLevel("Game");
+    }
+
+    public void OpenMenu()
+    {
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel("Menu");
+    }
+
+    private void UpdateRetryButton()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            retryButton.enabled = false;
+            retryButton.GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f);
+        }
+        else
+        {
+            retryButton.enabled = true;
+            retryButton.GetComponent<Image>().color = Color.white;
+        }
     }
 }

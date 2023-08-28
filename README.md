@@ -1,2 +1,2 @@
-# 2D Multiplayer Game (Sill In Development)
+# 2D Multiplayer Game (Still In Development)
 Multiplayer game made usingin unity 2d and Photon Networking

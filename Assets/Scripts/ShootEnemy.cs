@@ -27,6 +27,9 @@ public class ShootEnemy : EnemyController
 
     private void Update()
     {
+        if (GameManager.instance.GameState == GameState.GameOver)
+            return;
+
         target = GetClosestTarget();
 
         if (GetDistance(target) > attackDistance)
@@ -78,19 +81,6 @@ public class ShootEnemy : EnemyController
     private void ResetShot()
     {
         shotFired = false;
-    }
-
-    public override void TakeDamage(float value)
-    {
-        Health -= value;
-
-        spriteRenderer.color = Color.white;
-
-        popUp.Popup();
-
-        Invoke("ResetColor", 0.075f);
-
-        if (Health <= 0) Die();
     }
 
     private void ResetColor()
