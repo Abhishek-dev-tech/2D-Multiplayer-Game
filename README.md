@@ -1,2 +1,2 @@
 # 2D Multiplayer Game (Still In Development)
-Multiplayer game made usingin unity 2d and Photon Networking
+Simple 2D Multiplayer game made in Unity using Photon Networking
