@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
 
     private int score;
 
+    private PhotonView view;
+
     private void Awake()
     {
         if (instance == null)
@@ -47,6 +49,8 @@ public class UIManager : MonoBehaviour
     {
         scoreText.gameObject.SetActive(false);
         scoreText.text = score.ToString();
+
+        view = GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -102,7 +106,8 @@ public class UIManager : MonoBehaviour
 
     public void Retry()
     {
-        
+        AudioManager.instance.PlaySoundEffect("Hit");
+        view.RPC("RPC_Retry", RpcTarget.All);
     }
 
     [PunRPC]
@@ -113,6 +118,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenMenu()
     {
+        AudioManager.instance.PlaySoundEffect("Hit");
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel("Menu");
     }

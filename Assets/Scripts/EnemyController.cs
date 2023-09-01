@@ -7,6 +7,9 @@ public abstract class EnemyController : MonoBehaviour
     public float maxHealth;
 
     [HideInInspector]
+    public CameraShake cameraShake;
+
+    [HideInInspector]
     public GameObject target;
 
     [HideInInspector]
@@ -44,6 +47,8 @@ public abstract class EnemyController : MonoBehaviour
         view = GetComponent<PhotonView>();
         popUp = GetComponent<PopUp>();
 
+        cameraShake = GameManager.instance.GetCameraShake();
+
         once = 0;
     }
 
@@ -68,6 +73,10 @@ public abstract class EnemyController : MonoBehaviour
         once++;
 
         UIManager.instance.AddScore(50);
+
+        cameraShake.TriggerShake(0.2f, 0.35f);
+
+        AudioManager.instance.PlaySoundEffect("Die");
 
         gameObject.SetActive(false);
 
@@ -95,6 +104,7 @@ public abstract class EnemyController : MonoBehaviour
         Invoke("ResetColor", 0.075f);
 
         if (Health <= 0) Die();
+        else AudioManager.instance.PlaySoundEffect("Hit");
 
     }
 

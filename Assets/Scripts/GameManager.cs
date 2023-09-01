@@ -16,12 +16,17 @@ public class GameManager : MonoBehaviour
     private GameState gameState;
 
     [SerializeField]
+    private CameraShake cameraShake;
+
+    [SerializeField]
     private GameObject player;
 
     [Space(10)]
     public Vector2 min, max;
 
     private GameObject spawnedPlayer;
+
+    private bool isDisconnected;
 
     private void Awake()
     {
@@ -31,6 +36,19 @@ public class GameManager : MonoBehaviour
             Destroy(instance);
 
         gameState = GameState.Preparing;
+    }
+
+    private void Start()
+    {
+        isDisconnected = false;
+    }
+
+    private void Update()
+    {
+        if (isDisconnected)
+            return;
+
+        Disconnect();
     }
 
     private void SpawnPlayer()
@@ -46,6 +64,15 @@ public class GameManager : MonoBehaviour
         spawnedPlayer.SetActive(false);
     }
 
+    public void Disconnect()
+    {
+        if(GameState == GameState.Playing && PhotonNetwork.PlayerList.Length == 1)
+        {
+            isDisconnected = true;
+            UIManager.instance.OpenMenu();
+        }
+    }
+
     public GameState GameState 
     { 
         
@@ -58,5 +85,10 @@ public class GameManager : MonoBehaviour
             if (gameState == GameState.Playing)
                 SpawnPlayer();
         }
+    }
+
+    public CameraShake GetCameraShake()
+    {
+        return cameraShake;
     }
 }

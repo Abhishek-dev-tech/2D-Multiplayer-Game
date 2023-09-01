@@ -283,6 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 99910158}
   - component: {fileID: 99910157}
+  - component: {fileID: 99910159}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -304,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 1225769860}
   scoreText: {fileID: 377552546}
-  gameOverScoreText: {fileID: 1065575154}
+  gameOverScoreText: {fileID: 1007295963}
   healthBar: {fileID: 884649702}
   gameOverPanel: {fileID: 1391222411}
   warningGameObject: {fileID: 1821386002}
@@ -325,6 +326,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &99910159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99910156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &229203848
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +857,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -916,6 +940,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3462934978be4b44a99a6e2e80180df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &538305269
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,11 +2288,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6ec446324472c4187c5284c039d56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBullets: 20
-  maxDeathParlicles: 10
-  maxFollowEnemies: 10
-  maxShootingEnemies: 10
-  maxlaserEnemies: 10
+  maxBullets: 40
+  maxDeathParlicles: 30
+  maxFollowEnemies: 20
+  maxShootingEnemies: 20
+  maxlaserEnemies: 20
   bullet: {fileID: 4910056605569726890, guid: 2cc5ebbff58d4d34ebea6865e19c599b, type: 3}
   deathParlicle: {fileID: 7637631126566311965, guid: 8399a08036317a74d8f4ed54fe8ad0c9, type: 3}
   followEnemy: {fileID: 1223818023577377793, guid: 04c5c289992422e4e93db617132c7347, type: 3}
@@ -3049,7 +3085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1049fa822fe5ede419da2061a06a8353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTime: 5
+  maxTime: 1.5
   spawnPoints:
   - {fileID: 1220362296}
   - {fileID: 263134042}
@@ -3184,6 +3220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c5219401c8a2d458ec5dd4a3e94e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraShake: {fileID: 519420033}
   player: {fileID: 6522945416797118115, guid: 744c6c8f6bcbf0540ad44dbd9c423182, type: 3}
   min: {x: -23, y: -13}
   max: {x: 23, y: 13}

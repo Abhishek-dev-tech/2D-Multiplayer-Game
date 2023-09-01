@@ -23,6 +23,14 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     public GameObject joinRoom;
     public GameObject room;
 
+    private AudioManager audioManager;
+
+
+    private void Start()
+    {
+        audioManager = AudioManager.instance;
+    }
+
 
     public void Connect()
     {
@@ -36,6 +44,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
 
         PhotonNetwork.ConnectUsingSettings();
+
+        audioManager.PlaySoundEffect("Click");
 
     }
 
@@ -52,10 +62,13 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = 2;
 
         PhotonNetwork.CreateRoom(createRoomInputField.text, roomOptions);
+
+        audioManager.PlaySoundEffect("Click");
     }
 
     public void JoinRoom()
     {
+        audioManager.PlaySoundEffect("Click");
         PhotonNetwork.JoinRoom(joinRoomInputField.text);
     }
 
@@ -73,6 +86,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public void LeftRoom()
     {
+        audioManager.PlaySoundEffect("Click");
         PhotonNetwork.LeaveRoom();
     }
 
@@ -85,6 +99,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public void Play()
     {
+        audioManager.PlaySoundEffect("Click");
         PhotonNetwork.LoadLevel("Game");
     }
 

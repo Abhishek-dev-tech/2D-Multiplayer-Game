@@ -65,6 +65,8 @@ public class LaserEnemy : EnemyController
 
         popUp.Popup();
 
+        AudioManager.instance.PlaySoundEffect("Shooting");
+
         Invoke("ResetLaser", rateOfFire / 2f);
         Invoke("ResetLaserShot", rateOfFire);
     }
@@ -72,6 +74,8 @@ public class LaserEnemy : EnemyController
     private void ResetLaser()
     {
         SetLaserPosAndCollider(Vector3.zero);
+
+        AudioManager.instance.PlaySoundEffect("Shooting");
     }
 
     private void ResetLaserShot()
@@ -103,7 +107,7 @@ public class LaserEnemy : EnemyController
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if(collision.CompareTag("Player") && GameManager.instance.GameState == GameState.Playing)
         {
             if (damageTimer >= maxDamageTime)
             {

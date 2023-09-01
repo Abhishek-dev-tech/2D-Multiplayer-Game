@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private float m_health;
 
+    private CameraShake cameraShake;
+
     public float Health
     {
         get
@@ -47,6 +49,8 @@ public class PlayerController : MonoBehaviour
         cam =  Camera.main;
         view = GetComponent<PhotonView>();
         popUp = GetComponent<PopUp>();
+
+        cameraShake = GameManager.instance.GetCameraShake();
 
         m_health = maxHealth;
     }
@@ -80,6 +84,8 @@ public class PlayerController : MonoBehaviour
     {
         float desiredBulletSpread = UnityEngine.Random.Range(-bulletSpread, bulletSpread);
 
+        cameraShake.TriggerShake(0.15f, 0.15f);
+
         view.RPC("RPC_Shoot", RpcTarget.All, GetBulletAngle(), desiredBulletSpread);
     }
 
@@ -93,6 +99,8 @@ public class PlayerController : MonoBehaviour
         tempBullet.GetComponent<Bullet>().bulletParent = BulletParent.Player;
 
         popUp.Popup();
+
+        AudioManager.instance.PlaySoundEffect("Shooting");
 
         tempBullet.transform.position = transform.position;
 
@@ -112,6 +120,7 @@ public class PlayerController : MonoBehaviour
         popUp.Popup();
 
         if (Health <= 0) Die();
+        else AudioManager.instance.PlaySoundEffect("Hit");
     }
 
     private void Die()
@@ -122,6 +131,8 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     public void RPC_Die()
     {
+        AudioManager.instance.PlaySoundEffect("Die");
+
         GameManager.instance.GameOver();
         UIManager.instance.GameOver();
     }

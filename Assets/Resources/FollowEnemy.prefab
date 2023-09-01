@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
   maxHealth: 100
+  cameraShake: {fileID: 0}
   target: {fileID: 0}
   players: []
   spriteRenderer: {fileID: 0}

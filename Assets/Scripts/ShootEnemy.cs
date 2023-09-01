@@ -65,6 +65,8 @@ public class ShootEnemy : EnemyController
 
         popUp.Popup();
 
+        AudioManager.instance.PlaySoundEffect("Shooting");
+
         shotFired = true;
 
         float desiredBulletSpread = Random.Range(-bulletSpread, bulletSpread);
